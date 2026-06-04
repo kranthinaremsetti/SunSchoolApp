@@ -9,6 +9,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 import AnnouncementsScreen from "../screens/AnnouncementsScreen";
 import HomeworkScreen from "../screens/HomeworkScreen";
 import TeacherAttendanceScreen from "../screens/TeacherAttendanceScreen";
+import NotificationScreen from "../screens/NotificationScreen";
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
@@ -60,6 +61,10 @@ export default function AppNavigator() {
         component={TeacherAttendanceScreen}
         options={{ title: "Take Attendance" }}
         />
+        <Stack.Screen
+        name="Notifications"
+        component={NotificationScreen}
+      />
       </Stack.Navigator>
     </NavigationContainer>
   );

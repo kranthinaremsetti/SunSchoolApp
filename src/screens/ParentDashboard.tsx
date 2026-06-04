@@ -19,6 +19,14 @@ export default function ParentDashboard() {
         </Text>
       </View>
       <View style={styles.row}>
+        <TouchableOpacity
+        style={styles.notificationButton}
+        onPress={() => navigation.navigate("Notifications")}
+      >
+        <Text style={styles.notificationButtonText}>
+          View Notifications 🔔
+        </Text>
+      </TouchableOpacity>
   <TouchableOpacity
     style={styles.dashboardCard}
     onPress={() => navigation.navigate("Attendance")}
@@ -100,6 +108,19 @@ const styles = StyleSheet.create({
 
 dashboardText: {
   fontSize: 20,
+  fontWeight: "bold",
+},
+notificationButton: {
+  backgroundColor: "#2563EB",
+  padding: 12,
+  borderRadius: 10,
+  alignItems: "center",
+  marginBottom: 20,
+},
+
+notificationButtonText: {
+  color: "white",
+  fontSize: 16,
   fontWeight: "bold",
 },
 });
