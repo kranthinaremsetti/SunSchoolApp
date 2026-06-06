@@ -20,4 +20,18 @@ export const students = [
     rollNo: 3,
     parentId: 103,
   },
+  {
+    id: 4,
+    name: "Ramesh",
+    className: "5th Class",
+    rollNo: 4,
+    parentId: 104,
+  },
+  {
+    id: 5,
+    name: "Suresh",
+    className: "5th Class",
+    rollNo: 5,
+    parentId: 105,
+  },
 ];

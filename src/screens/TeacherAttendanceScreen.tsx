@@ -4,20 +4,30 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Alert
+  Alert,
 } from "react-native";
 import { useState } from "react";
-import { studentsData } from "../constants/studentsData";
+import { students } from "../data/students";
 import { Picker } from "@react-native-picker/picker";
-import { classesData } from "../constants/classesData";
-import { generatedNotifications } from "../services/notificationService";
+import { classesData } from "../constants/classesData";import {
+  attendanceRecords,
+  addAttendanceRecord,
+} from "../data/attendance";
+
 export default function TeacherAttendanceScreen() {
-  const [students, setStudents] = useState(studentsData);
+  const [studentsState, setStudentsState] = useState(
+    students.map((student) => ({
+      ...student,
+      present: true,
+    }))
+  );
+
   const [selectedClass, setSelectedClass] =
-  useState("5th Class");
+    useState("5th Class");
+
   const toggleAttendance = (id: number) => {
-    setStudents(
-      students.map((student) =>
+    setStudentsState(
+      studentsState.map((student) =>
         student.id === id
           ? {
               ...student,
@@ -27,85 +37,97 @@ export default function TeacherAttendanceScreen() {
       )
     );
   };
+
   const submitAttendance = () => {
-    const presentCount = students.filter(
+    const presentCount = studentsState.filter(
       (student) => student.present
     ).length;
 
-    const absentCount = students.length - presentCount;
-    const absentStudents = students.filter(
-      (student) => !student.present
-    );
+    const absentCount =
+      studentsState.length - presentCount;
 
-    generatedNotifications.length = 0;
+    const today = new Date()
+  .toISOString()
+  .split("T")[0];
 
-    absentStudents.forEach((student) => {
-      generatedNotifications.push({
-        id: Date.now() + student.id,
-        title: "Attendance Alert",
-        message: `${student.name} was absent in ${selectedClass}.`,
-      });
-    });
+studentsState.forEach((student) => {
+  addAttendanceRecord(
+    student.id,
+    today,
+    student.present
+      ? "Present"
+      : "Absent"
+  );
+});
+console.log(attendanceRecords)
     Alert.alert(
       "Attendance Submitted",
       `Class: ${selectedClass}\nPresent: ${presentCount}\nAbsent: ${absentCount}`
     );
   };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
         Take Attendance
       </Text>
-      <View style={styles.pickerContainer}>
-      <Text style={styles.label}>
-        Select Class
-      </Text>
 
-      <Picker
-        selectedValue={selectedClass}
-        onValueChange={(itemValue) =>
-          setSelectedClass(itemValue)
-        }
-      >
-        {classesData.map((className) => (
-          <Picker.Item
-            key={className}
-            label={className}
-            value={className}
-          />
-        ))}
-      </Picker>
-      <Text>
-        Selected: {selectedClass}
-      </Text>
-    </View>
-      <ScrollView>
-        {students.map((student) => (
-        <TouchableOpacity
-          key={student.id}
-          style={[
-          styles.studentItem,
-          {
-            backgroundColor: student.present
-              ? "#DCFCE7"
-              : "#FEE2E2",
-          },
-        ]}
-          onPress={() => toggleAttendance(student.id)}
+      <View style={styles.pickerContainer}>
+        <Text style={styles.label}>
+          Select Class
+        </Text>
+
+        <Picker
+          selectedValue={selectedClass}
+          onValueChange={(itemValue) =>
+            setSelectedClass(itemValue)
+          }
         >
-          <Text>
-            {student.present ? "🟢" : "🔴"} {student.name}
+          {classesData.map((className) => (
+            <Picker.Item
+              key={className}
+              label={className}
+              value={className}
+            />
+          ))}
+        </Picker>
+
+        <Text>
+          Selected: {selectedClass}
+        </Text>
+      </View>
+
+      <ScrollView>
+        {studentsState.map((student) => (
+          <TouchableOpacity
+            key={student.id}
+            style={[
+              styles.studentItem,
+              {
+                backgroundColor: student.present
+                  ? "#DCFCE7"
+                  : "#FEE2E2",
+              },
+            ]}
+            onPress={() =>
+              toggleAttendance(student.id)
+            }
+          >
+            <Text>
+              {student.present ? "🟢" : "🔴"}{" "}
+              {student.name}
+            </Text>
+          </TouchableOpacity>
+        ))}
+
+        <TouchableOpacity
+          style={styles.submitButton}
+          onPress={submitAttendance}
+        >
+          <Text style={styles.submitButtonText}>
+            Submit Attendance
           </Text>
         </TouchableOpacity>
-      ))}
-      <TouchableOpacity
-        style={styles.submitButton}
-        onPress={submitAttendance}
-      >
-        <Text style={styles.submitButtonText}>
-          Submit Attendance
-        </Text>
-      </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -113,26 +135,21 @@ export default function TeacherAttendanceScreen() {
 
 const styles = StyleSheet.create({
   container: {
-  flex: 1,
-  padding: 15,
+    flex: 1,
+    padding: 15,
   },
 
   title: {
     fontSize: 28,
     fontWeight: "bold",
+    marginBottom: 10,
   },
 
-  studentItem: {
-    backgroundColor: "lightgray",
-    padding: 10,
-    margin: 10,
-    borderRadius: 5,
-  },
   pickerContainer: {
-  backgroundColor: "white",
-  borderRadius: 10,
-  marginBottom: 20,
-  elevation: 2,
+    backgroundColor: "white",
+    borderRadius: 10,
+    marginBottom: 20,
+    elevation: 2,
   },
 
   label: {
@@ -140,18 +157,25 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     padding: 10,
   },
-  submitButton: {
-  backgroundColor: "#2563EB",
-  padding: 15,
-  borderRadius: 10,
-  alignItems: "center",
-  marginTop: 20,
-  marginBottom: 20,
-},
 
-submitButtonText: {
-  color: "white",
-  fontSize: 18,
-  fontWeight: "bold",
-},
+  studentItem: {
+    padding: 12,
+    marginVertical: 6,
+    borderRadius: 8,
+  },
+
+  submitButton: {
+    backgroundColor: "#2563EB",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 20,
+    marginBottom: 20,
+  },
+
+  submitButtonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
 });

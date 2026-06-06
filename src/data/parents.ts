@@ -21,6 +21,12 @@ export const parents = [
   id: 104,
   username: "parent4",
   password: "1234",
-  studentId: 2
+  studentId: 4,
+},
+{
+  id: 105,
+  username: "parent5",
+  password: "1234",
+  studentId: 5,
 },
 ];
