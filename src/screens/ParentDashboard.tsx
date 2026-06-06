@@ -1,8 +1,12 @@
 import { View, Text, StyleSheet,TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { students } from "../data/students";
+import { currentStudentId } from "../data/session";
 export default function ParentDashboard() {
   const navigation = useNavigation<any>();
-
+  const student = students.find(
+  (s) => s.id === currentStudentId
+);
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>
@@ -11,11 +15,11 @@ export default function ParentDashboard() {
 
       <View style={styles.studentCard}>
         <Text style={styles.studentName}>
-          Ravi Kumar
+          {student?.name}
         </Text>
 
         <Text style={styles.studentInfo}>
-          Class: 5th Class
+          Class: {student?.className}
         </Text>
       </View>
       <View style={styles.row}>

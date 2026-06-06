@@ -8,22 +8,42 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { parents } from "../data/parents";
+import { teachers } from "../data/teachers";
+import { setCurrentStudentId } from "../data/session";
 
 export default function LoginScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation<any>();
   const handleLogin = () => {
-  if (username === "parent1" && password === "1234") {
+  const parent = parents.find(
+    (p) =>
+      p.username === username &&
+      p.password === password
+  );
+
+  if (parent) {
+    setCurrentStudentId(parent.studentId);
+
     navigation.navigate("ParentDashboard");
-  } else if (
-    username === "teacher1" &&
-    password === "1234"
-  ) {
-    navigation.navigate("TeacherDashboard");
-  } else {
-    alert("Invalid Credentials");
+
+    return;
   }
+
+  const teacher = teachers.find(
+    (t) =>
+      t.username === username &&
+      t.password === password
+  );
+
+  if (teacher) {
+    navigation.navigate("TeacherDashboard");
+
+    return;
+  }
+
+  alert("Invalid Credentials");
 };
 
   return (
