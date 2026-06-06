@@ -1,7 +1,10 @@
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+} from "react-native";
 
 import { students } from "../data/students";
-import { parents } from "../data/parents";
 import { currentStudentId } from "../data/session";
 
 export default function ProfileScreen() {
@@ -9,9 +12,15 @@ export default function ProfileScreen() {
     (s) => s.id === currentStudentId
   );
 
-  const parent = parents.find(
-    (p) => p.studentId === currentStudentId
-  );
+  if (!student) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>
+          Student not found
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -20,20 +29,32 @@ export default function ProfileScreen() {
       </Text>
 
       <View style={styles.card}>
-        <Text style={styles.info}>
-          Name: {student?.name}
+        <Text style={styles.label}>
+          Name:
+        </Text>
+        <Text style={styles.value}>
+          {student.name}
         </Text>
 
-        <Text style={styles.info}>
-          Class: {student?.className}
+        <Text style={styles.label}>
+          Class:
+        </Text>
+        <Text style={styles.value}>
+          {student.className}
         </Text>
 
-        <Text style={styles.info}>
-          Roll No: {student?.rollNo}
+        <Text style={styles.label}>
+          Roll Number:
+        </Text>
+        <Text style={styles.value}>
+          {student.rollNo}
         </Text>
 
-        <Text style={styles.info}>
-          Parent Username: {parent?.username}
+        <Text style={styles.label}>
+          Parent ID:
+        </Text>
+        <Text style={styles.value}>
+          {student.parentId}
         </Text>
       </View>
     </View>
@@ -60,8 +81,22 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
 
-  info: {
+  label: {
     fontSize: 18,
-    marginBottom: 12,
+    fontWeight: "bold",
+    marginTop: 10,
+  },
+
+  value: {
+    fontSize: 18,
+    marginTop: 5,
+    color: "#374151",
+  },
+
+  errorText: {
+    fontSize: 20,
+    color: "red",
+    textAlign: "center",
+    marginTop: 50,
   },
 });

@@ -22,15 +22,16 @@ export default function ParentDashboard() {
           Class: {student?.className}
         </Text>
       </View>
-      <View style={styles.row}>
-        <TouchableOpacity
-        style={styles.notificationButton}
-        onPress={() => navigation.navigate("Notifications")}
-      >
-        <Text style={styles.notificationButtonText}>
-          View Notifications 🔔
-        </Text>
-      </TouchableOpacity>
+      <TouchableOpacity
+  style={styles.notificationButton}
+  onPress={() => navigation.navigate("Notifications")}
+>
+  <Text style={styles.notificationButtonText}>
+    View Notifications 🔔
+  </Text>
+</TouchableOpacity>
+
+<View style={styles.row}>
   <TouchableOpacity
     style={styles.dashboardCard}
     onPress={() => navigation.navigate("Attendance")}

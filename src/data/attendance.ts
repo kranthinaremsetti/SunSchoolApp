@@ -1,4 +1,6 @@
-export let attendanceRecords = [];
+export let attendanceRecords = [
+
+];
 
 export const addAttendanceRecord = (
   studentId: number,

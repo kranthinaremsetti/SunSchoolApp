@@ -13,6 +13,10 @@ import { classesData } from "../constants/classesData";import {
   attendanceRecords,
   addAttendanceRecord,
 } from "../data/attendance";
+import {
+  notifications,
+  addNotification,
+} from "../data/notifications";
 
 export default function TeacherAttendanceScreen() {
   const [studentsState, setStudentsState] = useState(
@@ -39,32 +43,45 @@ export default function TeacherAttendanceScreen() {
   };
 
   const submitAttendance = () => {
-    const presentCount = studentsState.filter(
-      (student) => student.present
-    ).length;
+  const presentCount = studentsState.filter(
+    (student) => student.present
+  ).length;
 
-    const absentCount =
-      studentsState.length - presentCount;
+  const absentCount =
+    studentsState.length - presentCount;
 
-    const today = new Date()
-  .toISOString()
-  .split("T")[0];
+  const today = new Date()
+    .toISOString()
+    .split("T")[0];
 
-studentsState.forEach((student) => {
-  addAttendanceRecord(
-    student.id,
-    today,
-    student.present
-      ? "Present"
-      : "Absent"
-  );
-});
-console.log(attendanceRecords)
-    Alert.alert(
-      "Attendance Submitted",
-      `Class: ${selectedClass}\nPresent: ${presentCount}\nAbsent: ${absentCount}`
+  studentsState.forEach((student) => {
+    addAttendanceRecord(
+      student.id,
+      today,
+      student.present
+        ? "Present"
+        : "Absent"
     );
-  };
+
+    if (!student.present) {
+      addNotification(
+        student.id,
+        "Attendance Alert",
+        `You were absent on ${today}`
+      );
+    }
+  });
+
+  console.log(
+    "Notifications:",
+    notifications
+  );
+
+  Alert.alert(
+    "Attendance Submitted",
+    `Class: ${selectedClass}\nPresent: ${presentCount}\nAbsent: ${absentCount}`
+  );
+};
 
   return (
     <View style={styles.container}>

@@ -5,21 +5,25 @@ import {
   ScrollView,
 } from "react-native";
 
-import { attendanceData } from "../constants/attendanceData";
+import { attendanceRecords } from "../data/attendance";
+import { currentStudentId } from "../data/session";
 
 export default function AttendanceScreen() {
-  const totalDays = attendanceData.length;
+  const studentAttendance = attendanceRecords.filter(
+  (record) => record.studentId === currentStudentId
+);
+  const totalDays = studentAttendance.length;
 
-  const presentDays = attendanceData.filter(
+  const presentDays = studentAttendance.filter(
     (item) => item.status === "Present"
   ).length;
 
   const absentDays = totalDays - presentDays;
 
-  const attendancePercentage = (
-    (presentDays / totalDays) *
-    100
-  ).toFixed(0);
+  const attendancePercentage =
+  totalDays === 0
+    ? "0"
+    : ((presentDays / totalDays) * 100).toFixed(0);
 
   return (
     <ScrollView style={styles.container}>
@@ -45,7 +49,7 @@ export default function AttendanceScreen() {
         Attendance History
       </Text>
 
-      {attendanceData.map((item, index) => (
+      {studentAttendance.map((item, index) => (
         <View
           key={index}
           style={styles.historyCard}

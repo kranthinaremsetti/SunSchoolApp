@@ -1,11 +1,4 @@
-export let notifications = [
-  {
-    id: 1,
-    studentId: 1,
-    title: "Welcome",
-    message: "Welcome to Sun School App",
-  },
-];
+export let notifications = [];
 
 export const addNotification = (
   studentId: number,
