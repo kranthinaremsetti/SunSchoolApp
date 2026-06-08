@@ -62,6 +62,16 @@ export default function ParentDashboard() {
     <Text style={styles.dashboardText}>Homework</Text>
   </TouchableOpacity>
 </View>
+<View style={styles.row}>
+  <TouchableOpacity
+    style={styles.singleCard}
+    onPress={() => navigation.navigate("Fees")}
+  >
+    <Text style={styles.dashboardText}>
+      Fees
+    </Text>
+  </TouchableOpacity>
+</View>
     </View>
   );
 }
@@ -127,5 +137,15 @@ notificationButtonText: {
   color: "white",
   fontSize: 16,
   fontWeight: "bold",
+},
+singleCard: {
+  backgroundColor: "white",
+  width: "100%",
+  height: 120,
+  borderRadius: 12,
+  justifyContent: "center",
+  alignItems: "center",
+  elevation: 3,
+  marginBottom: 15,
 },
 });

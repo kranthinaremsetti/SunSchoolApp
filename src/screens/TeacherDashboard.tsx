@@ -1,4 +1,9 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export default function TeacherDashboard() {
@@ -10,16 +15,56 @@ export default function TeacherDashboard() {
         Welcome Teacher 👨‍🏫
       </Text>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() =>
-          navigation.navigate("TeacherAttendance")
-        }
-      >
-        <Text style={styles.buttonText}>
-          Take Attendance
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.row}>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() =>
+            navigation.navigate(
+              "TeacherAttendance"
+            )
+          }
+        >
+          <Text style={styles.cardText}>
+            Attendance
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() =>
+            navigation.navigate(
+              "TeacherHomework"
+            )
+          }
+        >
+          <Text style={styles.cardText}>
+            Homework
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.row}>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() =>
+            navigation.navigate(
+              "TeacherAnnouncement"
+            )
+          }
+        >
+          <Text style={styles.cardText}>
+            Announcements
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.card}
+        >
+          <Text style={styles.cardText}>
+            Students
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -27,25 +72,33 @@ export default function TeacherDashboard() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    padding: 20,
+    backgroundColor: "#F8FAFC",
   },
 
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    marginBottom: 30,
+    marginBottom: 25,
   },
 
-  button: {
-    backgroundColor: "#2563EB",
-    paddingHorizontal: 30,
-    paddingVertical: 15,
-    borderRadius: 10,
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 15,
   },
 
-  buttonText: {
-    color: "white",
+  card: {
+    backgroundColor: "white",
+    width: "48%",
+    height: 120,
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 3,
+  },
+
+  cardText: {
     fontSize: 18,
     fontWeight: "bold",
   },

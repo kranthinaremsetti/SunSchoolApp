@@ -10,6 +10,10 @@ import AnnouncementsScreen from "../screens/AnnouncementsScreen";
 import HomeworkScreen from "../screens/HomeworkScreen";
 import TeacherAttendanceScreen from "../screens/TeacherAttendanceScreen";
 import NotificationScreen from "../screens/NotificationScreen";
+import FeesScreen from "../screens/FeesScreen";
+import TeacherHomeworkScreen from "../screens/TeacherHomeworkScreen";
+import TeacherAnnouncementScreen from "../screens/TeacherAnnouncementScreen";
+
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
@@ -64,6 +68,21 @@ export default function AppNavigator() {
         <Stack.Screen
         name="Notifications"
         component={NotificationScreen}
+      />
+      <Stack.Screen
+        name="Fees"
+        component={FeesScreen}
+      />
+      <Stack.Screen
+        name="TeacherHomework"
+        component={TeacherHomeworkScreen}
+        options={{ title: "Post Homework" }}
+      />
+
+      <Stack.Screen
+        name="TeacherAnnouncement"
+        component={TeacherAnnouncementScreen}
+        options={{ title: "Post Announcement" }}
       />
       </Stack.Navigator>
     </NavigationContainer>
