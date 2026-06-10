@@ -1,4 +1,4 @@
-export const homeworkData = [
+export let homeworkData = [
   {
     id: 1,
     className: "5th Class",
@@ -21,3 +21,18 @@ export const homeworkData = [
     dueDate: "2026-06-12",
   },
 ];
+
+export const addHomework = (
+  className: string,
+  subject: string,
+  task: string,
+  dueDate: string
+) => {
+  homeworkData.push({
+    id: Date.now(),
+    className,
+    subject,
+    task,
+    dueDate,
+  });
+};

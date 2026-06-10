@@ -1,11 +1,80 @@
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
+import { useState } from "react";
+import { addHomework } from "../data/homework";
 
 export default function TeacherHomeworkScreen() {
+  const [subject, setSubject] = useState("");
+  const [task, setTask] = useState("");
+  const [dueDate, setDueDate] = useState("");
+
+  const postHomework = () => {
+    if (!subject || !task || !dueDate) {
+      Alert.alert(
+        "Error",
+        "Please fill all fields"
+      );
+      return;
+    }
+
+    addHomework(
+      "5th Class",
+      subject,
+      task,
+      dueDate
+    );
+
+    Alert.alert(
+      "Success",
+      "Homework Posted"
+    );
+
+    setSubject("");
+    setTask("");
+    setDueDate("");
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        Teacher Homework Screen
+        Post Homework
       </Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Subject"
+        value={subject}
+        onChangeText={setSubject}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Homework Task"
+        value={task}
+        onChangeText={setTask}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Due Date (YYYY-MM-DD)"
+        value={dueDate}
+        onChangeText={setDueDate}
+      />
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={postHomework}
+      >
+        <Text style={styles.buttonText}>
+          Post Homework
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -13,12 +82,34 @@ export default function TeacherHomeworkScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    padding: 20,
+    backgroundColor: "#F8FAFC",
   },
 
   title: {
     fontSize: 28,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+
+  input: {
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
+    elevation: 2,
+  },
+
+  button: {
+    backgroundColor: "#2563EB",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+
+  buttonText: {
+    color: "white",
+    fontSize: 18,
     fontWeight: "bold",
   },
 });

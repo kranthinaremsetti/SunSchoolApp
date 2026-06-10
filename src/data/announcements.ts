@@ -1,4 +1,4 @@
-export const announcements = [
+export let announcements = [
   {
     id: 1,
     title: "School Holiday",
@@ -15,3 +15,14 @@ export const announcements = [
     message: "Please pay school fees before June 20.",
   },
 ];
+
+export const addAnnouncement = (
+  title: string,
+  message: string
+) => {
+  announcements.push({
+    id: Date.now(),
+    title,
+    message,
+  });
+};
