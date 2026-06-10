@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { parents } from "../data/parents";
 import { teachers } from "../data/teachers";
 import { setCurrentStudentId } from "../data/session";
+import { admins } from "../data/admins";
 
 export default function LoginScreen() {
   const [username, setUsername] = useState("");
@@ -42,6 +43,19 @@ export default function LoginScreen() {
 
     return;
   }
+  const admin = admins.find(
+      (a) =>
+        a.username === username &&
+        a.password === password
+    );
+
+    if (admin) {
+      navigation.navigate(
+        "AdminDashboard"
+      );
+
+      return;
+    }
 
   alert("Invalid Credentials");
 };

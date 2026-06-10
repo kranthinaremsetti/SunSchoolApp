@@ -64,13 +64,47 @@ export default function ParentDashboard() {
 </View>
 <View style={styles.row}>
   <TouchableOpacity
-    style={styles.singleCard}
+    style={styles.dashboardCard}
     onPress={() => navigation.navigate("Fees")}
   >
     <Text style={styles.dashboardText}>
       Fees
     </Text>
   </TouchableOpacity>
+  <TouchableOpacity
+  style={styles.dashboardCard}
+  onPress={() =>
+    navigation.navigate("Timetable")
+  }
+>
+  <Text style={styles.dashboardText}>
+    Timetable
+  </Text>
+</TouchableOpacity>
+</View>
+<View style={styles.row}>
+  <TouchableOpacity
+    style={styles.dashboardCard}
+    onPress={() =>
+      navigation.navigate("Results")
+    }
+  >
+    <Text style={styles.dashboardText}>
+      Results
+    </Text>
+  </TouchableOpacity>
+  <TouchableOpacity
+  style={styles.dashboardCard}
+  onPress={() =>
+    navigation.navigate(
+      "LeaveRequest"
+    )
+  }
+>
+  <Text style={styles.dashboardText}>
+    Leave
+  </Text>
+</TouchableOpacity>
 </View>
     </View>
   );

@@ -13,6 +13,14 @@ import NotificationScreen from "../screens/NotificationScreen";
 import FeesScreen from "../screens/FeesScreen";
 import TeacherHomeworkScreen from "../screens/TeacherHomeworkScreen";
 import TeacherAnnouncementScreen from "../screens/TeacherAnnouncementScreen";
+import TimetableScreen from "../screens/TimetableScreen";
+import TeacherStudentsScreen from "../screens/TeacherStudentsScreen";
+import AdminDashboard from "../screens/AdminDashboard";
+import AdminStudentsScreen from "../screens/AdminStudentsScreen";
+import AdminFeesScreen from "../screens/AdminFeesScreen";
+import ResultsScreen from "../screens/ResultsScreen";
+import LeaveRequestScreen from "../screens/LeaveRequestScreen";
+import LeaveRequestsScreen from "../screens/LeaveRequestsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -84,6 +92,45 @@ export default function AppNavigator() {
         component={TeacherAnnouncementScreen}
         options={{ title: "Post Announcement" }}
       />
+      <Stack.Screen
+        name="Timetable"
+        component={TimetableScreen}
+      />
+      <Stack.Screen
+        name="TeacherStudents"
+        component={TeacherStudentsScreen}
+        options={{ title: "Students" }}
+      />
+      <Stack.Screen
+        name="AdminDashboard"
+        component={AdminDashboard}
+      />
+      <Stack.Screen
+      name="AdminStudents"
+      component={AdminStudentsScreen}
+      options={{
+        title: "Student Management",
+      }}
+    />
+    <Stack.Screen
+      name="AdminFees"
+      component={AdminFeesScreen}
+      options={{
+        title: "Fee Management",
+      }}
+    />
+    <Stack.Screen
+      name="Results"
+      component={ResultsScreen}
+    />
+    <Stack.Screen
+      name="LeaveRequest"
+      component={LeaveRequestScreen}
+    />
+    <Stack.Screen
+      name="LeaveRequests"
+      component={LeaveRequestsScreen}
+    />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -59,9 +59,28 @@ export default function TeacherDashboard() {
 
         <TouchableOpacity
           style={styles.card}
+          onPress={() =>
+            navigation.navigate(
+              "TeacherStudents"
+            )
+          }
         >
           <Text style={styles.cardText}>
             Students
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.row}>
+          <TouchableOpacity
+          style={styles.card}
+          onPress={() =>
+            navigation.navigate(
+              "LeaveRequests"
+            )
+          }
+        >
+          <Text style={styles.cardText}>
+            Leave Requests
           </Text>
         </TouchableOpacity>
       </View>
