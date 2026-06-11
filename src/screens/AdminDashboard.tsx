@@ -50,6 +50,17 @@ export default function AdminDashboard() {
             Pending Fees: ₹{pendingFees}
         </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+        style={styles.card}
+        onPress={() =>
+          navigation.navigate("AdminReports")
+        }
+      >
+        <Text>
+          Reports
+        </Text>
+      </TouchableOpacity>
+      
     </View>
   );
 }

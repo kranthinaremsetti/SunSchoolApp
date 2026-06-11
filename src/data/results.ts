@@ -1,4 +1,4 @@
-export const resultsData = [
+export let resultsData = [
   {
     studentId: 1,
     subject: "Mathematics",
@@ -25,3 +25,15 @@ export const resultsData = [
     marks: 98,
   },
 ];
+
+export const addResult = (
+  studentId: number,
+  subject: string,
+  marks: number
+) => {
+  resultsData.push({
+    studentId,
+    subject,
+    marks,
+  });
+};

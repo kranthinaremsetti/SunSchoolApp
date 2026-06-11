@@ -21,6 +21,9 @@ import AdminFeesScreen from "../screens/AdminFeesScreen";
 import ResultsScreen from "../screens/ResultsScreen";
 import LeaveRequestScreen from "../screens/LeaveRequestScreen";
 import LeaveRequestsScreen from "../screens/LeaveRequestsScreen";
+import AdminReportsScreen from "../screens/AdminReportsScreen";
+import LeaveHistoryScreen from "../screens/LeaveHistoryScreen";
+import TeacherResultsScreen from "../screens/TeacherResultsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -130,6 +133,19 @@ export default function AppNavigator() {
     <Stack.Screen
       name="LeaveRequests"
       component={LeaveRequestsScreen}
+    />
+    <Stack.Screen
+      name="AdminReports"
+      component={AdminReportsScreen}
+      options={{ title: "Reports" }}
+    />
+    <Stack.Screen
+      name="LeaveHistory"
+      component={LeaveHistoryScreen}
+    />
+    <Stack.Screen
+      name="TeacherResults"
+      component={TeacherResultsScreen}
     />
       </Stack.Navigator>
     </NavigationContainer>

@@ -3,12 +3,15 @@ import {
   View,
   Text,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
-
+import { useState } from "react";
 import { leaveRequests } from "../data/leaveRequests";
 import { students } from "../data/students";
+import { updateLeaveStatus } from "../data/leaveRequests";
 
 export default function LeaveRequestsScreen() {
+  const [, forceUpdate] = useState(0);
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>
@@ -42,8 +45,42 @@ export default function LeaveRequestsScreen() {
             </Text>
 
             <Text>
-              Status: {leave.status}
-            </Text>
+  Status: {leave.status}
+    </Text>
+
+    {leave.status === "Pending" && (
+      <View style={styles.buttonRow}>
+        <TouchableOpacity
+          style={styles.approveButton}
+          onPress={() => {
+          updateLeaveStatus(
+            leave.id,
+            "Approved"
+          );
+          forceUpdate((v) => v + 1);
+}}
+        >
+          <Text style={styles.buttonText}>
+            Approve
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.rejectButton}
+          onPress={() => {
+          updateLeaveStatus(
+            leave.id,
+            "Rejected"
+          );
+          forceUpdate((v) => v + 1);
+        }}
+        >
+          <Text style={styles.buttonText}>
+            Reject
+          </Text>
+        </TouchableOpacity>
+      </View>
+    )}
           </View>
         );
       })}
@@ -77,4 +114,26 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 8,
   },
+  buttonRow: {
+  flexDirection: "row",
+  marginTop: 10,
+},
+
+approveButton: {
+  backgroundColor: "green",
+  padding: 10,
+  borderRadius: 8,
+  marginRight: 10,
+},
+
+rejectButton: {
+  backgroundColor: "red",
+  padding: 10,
+  borderRadius: 8,
+},
+
+buttonText: {
+  color: "white",
+  fontWeight: "bold",
+},
 });

@@ -106,6 +106,18 @@ export default function ParentDashboard() {
   </Text>
 </TouchableOpacity>
 </View>
+  <TouchableOpacity
+  style={styles.dashboardCard}
+  onPress={() =>
+    navigation.navigate(
+      "LeaveHistory"
+    )
+  }
+>
+  <Text style={styles.dashboardText}>
+    Leave History
+  </Text>
+</TouchableOpacity>
     </View>
   );
 }

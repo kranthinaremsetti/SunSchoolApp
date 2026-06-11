@@ -15,3 +15,16 @@ export const addLeaveRequest = (
     status: "Pending",
   });
 };
+
+export const updateLeaveStatus = (
+  id: number,
+  status: string
+) => {
+  const leave = leaveRequests.find(
+    (item) => item.id === id
+  );
+
+  if (leave) {
+    leave.status = status;
+  }
+};
