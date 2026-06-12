@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet,TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet,TouchableOpacity ,ScrollView} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { students } from "../data/students";
 import { currentStudentId } from "../data/session";
@@ -8,7 +8,7 @@ export default function ParentDashboard() {
   (s) => s.id === currentStudentId
 );
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.welcome}>
         Welcome Parent 👋
       </Text>
@@ -118,7 +118,7 @@ export default function ParentDashboard() {
     Leave History
   </Text>
 </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 

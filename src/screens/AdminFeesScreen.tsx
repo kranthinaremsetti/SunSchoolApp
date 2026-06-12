@@ -7,6 +7,7 @@ import {
 
 import { feesData } from "../data/fees";
 import { students } from "../data/students";
+import { getFees } from "../services/feeService";
 
 export default function AdminFeesScreen() {
   return (
@@ -15,7 +16,7 @@ export default function AdminFeesScreen() {
         Fee Management
       </Text>
 
-      {feesData.map((fee) => {
+      {getFees().map((fee) => {
         const student = students.find(
           (s) => s.id === fee.studentId
         );

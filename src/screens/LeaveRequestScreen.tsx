@@ -8,7 +8,9 @@ import {
 } from "react-native";
 import { useState } from "react";
 
-import { addLeaveRequest } from "../data/leaveRequests";
+import {
+  saveLeaveRequest
+} from "../services/leaveService";
 import { currentStudentId } from "../data/session";
 import { leaveRequests } from "../data/leaveRequests";
 
@@ -19,7 +21,7 @@ export default function LeaveRequestScreen() {
   const [toDate, setToDate] =
     useState("");
 
-  const submitLeave = () => {
+  const submitLeave = async() => {
     if (
       !reason ||
       !fromDate ||
@@ -32,12 +34,12 @@ export default function LeaveRequestScreen() {
       return;
     }
 
-    addLeaveRequest(
-      currentStudentId!,
-      reason,
-      fromDate,
-      toDate
-    );
+    await saveLeaveRequest(
+  currentStudentId!,
+  reason,
+  fromDate,
+  toDate
+);
 
     Alert.alert(
       "Success",

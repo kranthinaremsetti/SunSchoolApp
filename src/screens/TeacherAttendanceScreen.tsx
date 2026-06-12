@@ -9,10 +9,10 @@ import {
 import { useState } from "react";
 import { students } from "../data/students";
 import { Picker } from "@react-native-picker/picker";
-import { classesData } from "../constants/classesData";import {
-  attendanceRecords,
-  addAttendanceRecord,
-} from "../data/attendance";
+import { classesData } from "../constants/classesData";
+import {
+  saveAttendance,
+} from "../services/attendanceService";
 import {
   notifications,
   addNotification,
@@ -42,7 +42,7 @@ export default function TeacherAttendanceScreen() {
     );
   };
 
-  const submitAttendance = () => {
+  const submitAttendance = async() => {
   const presentCount = studentsState.filter(
     (student) => student.present
   ).length;
@@ -54,23 +54,23 @@ export default function TeacherAttendanceScreen() {
     .toISOString()
     .split("T")[0];
 
-  studentsState.forEach((student) => {
-    addAttendanceRecord(
-      student.id,
-      today,
-      student.present
-        ? "Present"
-        : "Absent"
-    );
+for (const student of studentsState) {
+  await saveAttendance(
+    student.id,
+    today,
+    student.present
+      ? "Present"
+      : "Absent"
+  );
 
-    if (!student.present) {
-      addNotification(
-        student.id,
-        "Attendance Alert",
-        `You were absent on ${today}`
-      );
-    }
-  });
+  if (!student.present) {
+    addNotification(
+      student.id,
+      "Attendance Alert",
+      `You were absent on ${today}`
+    );
+  }
+}
 
   console.log(
     "Notifications:",

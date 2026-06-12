@@ -5,19 +5,40 @@ import {
   StyleSheet,
 } from "react-native";
 
-import { resultsData } from "../data/results";
+import { useEffect, useState } from "react";
+import { getResults } from "../services/resultService";
 import { currentStudentId } from "../data/session";
 
 export default function ResultsScreen() {
-  const studentResults = resultsData.filter(
-    (result) =>
-      result.studentId === currentStudentId
-  );
+  const [studentResults, setStudentResults] =
+    useState<any[]>([]);
 
-  const totalMarks = studentResults.reduce(
-    (sum, result) => sum + result.marks,
-    0
-  );
+  useEffect(() => {
+    loadResults();
+  }, []);
+
+  const loadResults = async () => {
+    const results =
+      await getResults();
+
+    const filteredResults =
+      results.filter(
+        (result) =>
+          result.studentId ===
+          currentStudentId
+      );
+
+    setStudentResults(
+      filteredResults
+    );
+  };
+
+  const totalMarks =
+    studentResults.reduce(
+      (sum, result) =>
+        sum + result.marks,
+      0
+    );
 
   const percentage =
     studentResults.length > 0
@@ -43,9 +64,9 @@ export default function ResultsScreen() {
         </Text>
       </View>
 
-      {studentResults.map((result) => (
+      {studentResults.map((result, index) => (
         <View
-          key={result.subject}
+          key={index}
           style={styles.card}
         >
           <Text style={styles.subject}>

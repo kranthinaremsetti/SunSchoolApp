@@ -6,6 +6,7 @@ import {
 } from "react-native";
 
 import { students } from "../data/students";
+import { getStudents } from "../services/studentService";
 
 export default function AdminStudentsScreen() {
   return (
@@ -14,7 +15,7 @@ export default function AdminStudentsScreen() {
         Student Management
       </Text>
 
-      {students.map((student) => (
+      {getStudents().map((student) => (
         <View
           key={student.id}
           style={styles.card}

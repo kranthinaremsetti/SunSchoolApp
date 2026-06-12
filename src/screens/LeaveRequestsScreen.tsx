@@ -5,13 +5,40 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { useState } from "react";
-import { leaveRequests } from "../data/leaveRequests";
-import { students } from "../data/students";
-import { updateLeaveStatus } from "../data/leaveRequests";
+import { useState, useEffect } from "react";
 
+import {
+  getLeaveRequests,
+  updateLeaveStatus,
+} from "../services/leaveService";
+
+import { getStudents } from "../services/studentService";
 export default function LeaveRequestsScreen() {
-  const [, forceUpdate] = useState(0);
+  const [leaveRequests, setLeaveRequests] =
+    useState<any[]>([]);
+
+  const [students, setStudents] =
+    useState<any[]>([]);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    const leaveData =
+      await getLeaveRequests();
+
+    const studentData =
+      await getStudents();
+
+    setLeaveRequests(
+      leaveData
+    );
+
+    setStudents(
+      studentData
+    );
+  };
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>
@@ -25,7 +52,7 @@ export default function LeaveRequestsScreen() {
 
         return (
           <View
-            key={leave.id}
+            key={leave.firestoreId}
             style={styles.card}
           >
             <Text style={styles.name}>
@@ -52,13 +79,14 @@ export default function LeaveRequestsScreen() {
       <View style={styles.buttonRow}>
         <TouchableOpacity
           style={styles.approveButton}
-          onPress={() => {
-          updateLeaveStatus(
-            leave.id,
+          onPress={async () => {
+          await updateLeaveStatus(
+            leave.firestoreId,
             "Approved"
           );
-          forceUpdate((v) => v + 1);
-}}
+
+          loadData();
+        }}
         >
           <Text style={styles.buttonText}>
             Approve
@@ -67,13 +95,14 @@ export default function LeaveRequestsScreen() {
 
         <TouchableOpacity
           style={styles.rejectButton}
-          onPress={() => {
-          updateLeaveStatus(
-            leave.id,
+          onPress={async () => {
+          await updateLeaveStatus(
+            leave.firestoreId,
             "Rejected"
           );
-          forceUpdate((v) => v + 1);
-        }}
+
+          loadData();
+}}
         >
           <Text style={styles.buttonText}>
             Reject

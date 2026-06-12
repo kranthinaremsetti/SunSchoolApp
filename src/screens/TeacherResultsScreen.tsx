@@ -7,18 +7,20 @@ import {
   Alert,
 } from "react-native";
 import { useState } from "react";
-
-import { addResult } from "../data/results";
+import { saveResult } from "../services/resultService";
+import { Picker } from "@react-native-picker/picker";
+import { students } from "../data/students";
 
 export default function TeacherResultsScreen() {
   const [studentId, setStudentId] =
-    useState("");
+  useState("1");
+
   const [subject, setSubject] =
-    useState("");
+    useState("Mathematics");
   const [marks, setMarks] =
     useState("");
 
-  const submitResult = () => {
+  const submitResult = async() => {
     if (
       !studentId ||
       !subject ||
@@ -31,11 +33,11 @@ export default function TeacherResultsScreen() {
       return;
     }
 
-    addResult(
-      Number(studentId),
-      subject,
-      Number(marks)
-    );
+    await saveResult(
+  Number(studentId),
+  subject,
+  Number(marks)
+);
 
     Alert.alert(
       "Success",
@@ -53,20 +55,56 @@ export default function TeacherResultsScreen() {
         Enter Marks
       </Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Student ID"
-        value={studentId}
-        onChangeText={setStudentId}
-        keyboardType="numeric"
-      />
+      <Text style={styles.label}>
+        Select Student
+      </Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Subject"
-        value={subject}
-        onChangeText={setSubject}
-      />
+      <Picker
+        selectedValue={studentId}
+        onValueChange={(itemValue) =>
+          setStudentId(itemValue)
+        }
+      >
+        {students.map((student) => (
+          <Picker.Item
+            key={student.id}
+            label={student.name}
+            value={student.id.toString()}
+          />
+        ))}
+      </Picker>
+
+      <Text style={styles.label}>
+        Select Subject
+      </Text>
+
+      <Picker
+        selectedValue={subject}
+        onValueChange={(itemValue) =>
+          setSubject(itemValue)
+        }
+      >
+        <Picker.Item
+          label="Mathematics"
+          value="Mathematics"
+        />
+        <Picker.Item
+          label="Science"
+          value="Science"
+        />
+        <Picker.Item
+          label="English"
+          value="English"
+        />
+        <Picker.Item
+          label="Social"
+          value="Social"
+        />
+        <Picker.Item
+          label="Computer"
+          value="Computer"
+        />
+      </Picker>
 
       <TextInput
         style={styles.input}
@@ -121,4 +159,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  label: {
+  fontSize: 16,
+  fontWeight: "bold",
+  marginBottom: 5,
+},
 });

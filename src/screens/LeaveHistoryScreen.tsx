@@ -5,16 +5,38 @@ import {
   StyleSheet,
 } from "react-native";
 
-import { leaveRequests } from "../data/leaveRequests";
+import {
+  useState,
+  useEffect,
+} from "react";
+
 import { currentStudentId } from "../data/session";
 
+import { getLeaveRequests } from "../services/leaveService";
+
 export default function LeaveHistoryScreen() {
-  const studentLeaves =
-    leaveRequests.filter(
-      (leave) =>
-        leave.studentId ===
-        currentStudentId
+  const [studentLeaves, setStudentLeaves] =
+    useState<any[]>([]);
+
+  useEffect(() => {
+    loadLeaves();
+  }, []);
+
+  const loadLeaves = async () => {
+    const leaves =
+      await getLeaveRequests();
+
+    const filteredLeaves =
+      leaves.filter(
+        (leave) =>
+          leave.studentId ===
+          currentStudentId
+      );
+
+    setStudentLeaves(
+      filteredLeaves
     );
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -29,7 +51,7 @@ export default function LeaveHistoryScreen() {
       ) : (
         studentLeaves.map((leave) => (
           <View
-            key={leave.id}
+            key={leave.firestoreId}
             style={styles.card}
           >
             <Text style={styles.reason}>

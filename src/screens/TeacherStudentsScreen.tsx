@@ -5,9 +5,24 @@ import {
   ScrollView,
 } from "react-native";
 
-import { students } from "../data/students";
+import { useEffect, useState } from "react";
+import { getStudents } from "../services/studentService";
 
 export default function TeacherStudentsScreen() {
+  const [students, setStudents] =
+    useState<any[]>([]);
+
+  useEffect(() => {
+    loadStudents();
+  }, []);
+
+  const loadStudents = async () => {
+    const data =
+      await getStudents();
+
+    setStudents(data);
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>
