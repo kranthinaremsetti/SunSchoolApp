@@ -7,14 +7,14 @@ import {
   Alert,
 } from "react-native";
 import { useState } from "react";
-import { addHomework } from "../data/homework";
+import { saveHomework } from "../services/homeworkService";
 
 export default function TeacherHomeworkScreen() {
   const [subject, setSubject] = useState("");
   const [task, setTask] = useState("");
   const [dueDate, setDueDate] = useState("");
 
-  const postHomework = () => {
+  const postHomework = async() => {
     if (!subject || !task || !dueDate) {
       Alert.alert(
         "Error",
@@ -23,7 +23,7 @@ export default function TeacherHomeworkScreen() {
       return;
     }
 
-    addHomework(
+    await saveHomework(
       "5th Class",
       subject,
       task,

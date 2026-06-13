@@ -8,14 +8,16 @@ import {
 } from "react-native";
 
 import { useState } from "react";
-import { addAnnouncement } from "../data/announcements";
+import {
+  saveAnnouncement,
+} from "../services/announcementService";
 
 export default function TeacherAnnouncementScreen() {
   const [title, setTitle] = useState("");
   const [message, setMessage] =
     useState("");
 
-  const postAnnouncement = () => {
+  const postAnnouncement = async() => {
     if (!title || !message) {
       Alert.alert(
         "Error",
@@ -24,10 +26,10 @@ export default function TeacherAnnouncementScreen() {
       return;
     }
 
-    addAnnouncement(
-      title,
-      message
-    );
+    await saveAnnouncement(
+  title,
+  message
+);
 
     Alert.alert(
       "Success",

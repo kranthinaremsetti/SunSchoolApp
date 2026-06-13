@@ -5,9 +5,34 @@ import {
   ScrollView,
 } from "react-native";
 
-import { announcements } from "../data/announcements";
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  getAnnouncements,
+} from "../services/announcementService";
 
 export default function AnnouncementsScreen() {
+  const [
+    announcements,
+    setAnnouncements,
+  ] = useState<any[]>([]);
+
+  useEffect(() => {
+    loadAnnouncements();
+  }, []);
+
+  const loadAnnouncements =
+    async () => {
+      const data =
+        await getAnnouncements();
+
+      setAnnouncements(
+        data
+      );
+    };
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>
@@ -16,7 +41,7 @@ export default function AnnouncementsScreen() {
 
       {announcements.map((announcement) => (
         <View
-          key={announcement.id}
+          key={announcement.firestoreId}
           style={styles.card}
         >
           <Text style={styles.cardTitle}>

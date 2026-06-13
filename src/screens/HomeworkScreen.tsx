@@ -5,47 +5,78 @@ import {
   StyleSheet,
 } from "react-native";
 
-import { homeworkData } from "../data/homework";
-import { students } from "../data/students";
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import { getHomework } from "../services/homeworkService";
+import { getStudents } from "../services/studentService";
 import { currentStudentId } from "../data/session";
 
 export default function HomeworkScreen() {
-  const student = students.find(
-    (s) => s.id === currentStudentId
-  );
+  const [studentHomework, setStudentHomework] =
+    useState<any[]>([]);
 
-  const studentHomework = homeworkData.filter(
-    (hw) => hw.className === student?.className
-  );
+  useEffect(() => {
+    loadHomework();
+  }, []);
 
-  return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>
-        Homework
-      </Text>
+  const loadHomework = async () => {
+    const students =
+      await getStudents();
 
-      {studentHomework.map((hw) => (
-        <View
-          key={hw.id}
-          style={styles.card}
-        >
-          <Text style={styles.subject}>
-            📚 {hw.subject}
-          </Text>
+    const student =
+      students.find(
+        (s) =>
+          s.id === currentStudentId
+      );
 
-          <Text style={styles.task}>
-            {hw.task}
-          </Text>
+    const homework =
+      await getHomework();
+    console.log("Student:", student);
+console.log("Homework:", homework);
+    const filteredHomework =
+      homework.filter(
+        (hw) =>
+          hw.className ===
+          student?.className
+      );
+        console.log(
+  "Filtered Homework:",
+  filteredHomework
+);
+    setStudentHomework(
+      filteredHomework
+    );
+  };
+return (
+  <ScrollView style={styles.container}>
+    <Text style={styles.title}>
+      Homework
+    </Text>
 
-          <Text style={styles.dueDate}>
-            Due: {hw.dueDate}
-          </Text>
-        </View>
-      ))}
-    </ScrollView>
-  );
+    {studentHomework.map((hw) => (
+      <View
+        key={hw.firestoreId}
+        style={styles.card}
+      >
+        <Text style={styles.subject}>
+          📚 {hw.subject}
+        </Text>
+
+        <Text style={styles.task}>
+          {hw.task}
+        </Text>
+
+        <Text style={styles.dueDate}>
+          Due: {hw.dueDate}
+        </Text>
+      </View>
+    ))}
+  </ScrollView>
+);
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
