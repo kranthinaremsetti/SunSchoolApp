@@ -5,25 +5,56 @@ import {
   StyleSheet,
 } from "react-native";
 
-import { feesData } from "../data/fees";
-import { students } from "../data/students";
+import {
+  useEffect,
+  useState,
+} from "react";
+
 import { getFees } from "../services/feeService";
 
+import { getStudents } from "../services/studentService";
+
 export default function AdminFeesScreen() {
+  const [fees, setFees] =
+    useState<any[]>([]);
+
+  const [students, setStudents] =
+    useState<any[]>([]);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    const feeData =
+      await getFees();
+
+    const studentData =
+      await getStudents();
+
+    setFees(feeData);
+    setStudents(studentData);
+    console.log("Students:", students);
+    console.log("Fees:", fees);
+      };
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>
         Fee Management
       </Text>
 
-      {getFees().map((fee) => {
-        const student = students.find(
-          (s) => s.id === fee.studentId
+      {fees.map((fee) => {
+        const student =
+        students.find(
+          (s) =>
+            Number(s.id) ===
+            Number(fee.studentId)
         );
 
         return (
           <View
-            key={fee.studentId}
+            key={fee.firestoreId}
             style={styles.card}
           >
             <Text style={styles.name}>
@@ -31,15 +62,18 @@ export default function AdminFeesScreen() {
             </Text>
 
             <Text>
-              Total Fee: ₹{fee.totalFee}
+              Total Fee: ₹
+              {fee.totalFee}
             </Text>
 
             <Text>
-              Paid: ₹{fee.paidAmount}
+              Paid: ₹
+              {fee.paidAmount}
             </Text>
 
             <Text>
-              Due: ₹{fee.dueAmount}
+              Due: ₹
+              {fee.dueAmount}
             </Text>
           </View>
         );
@@ -47,7 +81,6 @@ export default function AdminFeesScreen() {
     </ScrollView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

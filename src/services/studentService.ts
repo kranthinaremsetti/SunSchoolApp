@@ -11,7 +11,10 @@ export const getStudents = async () => {
 
   const snapshot =
     await getDocs(studentsRef);
-
+  console.log(
+  "Student Docs:",
+  snapshot.docs.length
+);
   return snapshot.docs.map((doc) => ({
     id: doc.data().id,
     name: doc.data().name,
