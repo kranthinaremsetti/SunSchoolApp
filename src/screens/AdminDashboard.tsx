@@ -3,7 +3,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-
+  ScrollView,
 } from "react-native";
 
 import { students } from "../data/students";
@@ -20,7 +20,31 @@ export default function AdminDashboard() {
   );
   const navigation = useNavigation<any>();
   return (
-    <View style={styles.container}>
+            <ScrollView style={styles.container}>
+              <View style={styles.adminCard}>
+          <Text style={styles.adminTitle}>
+            🏫 Sun School Admin
+          </Text>
+
+          <Text style={styles.adminInfo}>
+            School Management Dashboard
+          </Text>
+        </View>
+        <View style={styles.row}>
+  <View style={styles.summaryCard}>
+    <Text style={styles.summaryValue}>
+      {students.length}
+    </Text>
+    <Text>Students</Text>
+  </View>
+
+  <View style={styles.summaryCard}>
+    <Text style={styles.summaryValue}>
+      {teachers.length}
+    </Text>
+    <Text>Teachers</Text>
+  </View>
+</View>
             <TouchableOpacity
         style={styles.card}
         onPress={() =>
@@ -28,7 +52,7 @@ export default function AdminDashboard() {
         }
         >
         <Text>
-            Students: {students.length}
+            👨‍🎓 Students
         </Text>
         </TouchableOpacity>
 
@@ -36,7 +60,7 @@ export default function AdminDashboard() {
         style={styles.card}
         >
         <Text>
-            Teachers: {teachers.length}
+            👨‍🏫 Teachers
         </Text>
         </TouchableOpacity>
 
@@ -46,8 +70,8 @@ export default function AdminDashboard() {
             navigation.navigate("AdminFees")
         }
         >
-        <Text>
-            Pending Fees: ₹{pendingFees}
+        <Text >
+          💰 Fees
         </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -57,11 +81,11 @@ export default function AdminDashboard() {
         }
       >
         <Text>
-          Reports
+         📈 Reports
         </Text>
       </TouchableOpacity>
       
-    </View>
+    </ScrollView>
   );
 }
 
@@ -85,4 +109,50 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     elevation: 3,
   },
+  cardText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  subText: {
+    fontSize: 16,
+    color: "gray",
+  },
+  adminCard: {
+  backgroundColor: "white",
+  padding: 20,
+  borderRadius: 12,
+  elevation: 3,
+  marginBottom: 20,
+},
+
+adminTitle: {
+  fontSize: 22,
+  fontWeight: "bold",
+},
+
+adminInfo: {
+  marginTop: 5,
+  color: "gray",
+},
+row: {
+  flexDirection: "row",
+  justifyContent: "space-between",
+},
+
+summaryCard: {
+  backgroundColor: "white",
+  width: "48%",
+  padding: 15,
+  borderRadius: 12,
+  alignItems: "center",
+  elevation: 3,
+  marginBottom: 15,
+},
+
+summaryValue: {
+  fontSize: 24,
+  fontWeight: "bold",
+  color: "#2563EB",
+},
 });

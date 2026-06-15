@@ -3,6 +3,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -10,11 +11,35 @@ export default function TeacherDashboard() {
   const navigation = useNavigation<any>();
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
-        Welcome Teacher 👨‍🏫
+    <ScrollView style={styles.container}>
+          <View style={styles.teacherCard}>
+      <Text style={styles.teacherName}>
+        👨‍🏫 Teacher
       </Text>
 
+      <Text style={styles.teacherInfo}>
+        Class: 5th Class
+      </Text>
+
+      <Text style={styles.teacherInfo}>
+        Subject: Mathematics
+      </Text>
+</View>
+    <View style={styles.row}>
+  <View style={styles.summaryCard}>
+    <Text style={styles.summaryValue}>
+      35
+    </Text>
+    <Text>Students</Text>
+  </View>
+
+  <View style={styles.summaryCard}>
+    <Text style={styles.summaryValue}>
+      2
+    </Text>
+    <Text>Leave Requests</Text>
+  </View>
+</View>
       <View style={styles.row}>
         <TouchableOpacity
           style={styles.card}
@@ -25,7 +50,7 @@ export default function TeacherDashboard() {
           }
         >
           <Text style={styles.cardText}>
-            Attendance
+           📅 Attendance
           </Text>
         </TouchableOpacity>
 
@@ -38,7 +63,7 @@ export default function TeacherDashboard() {
           }
         >
           <Text style={styles.cardText}>
-            Homework
+            📝 Homework
           </Text>
         </TouchableOpacity>
       </View>
@@ -53,7 +78,7 @@ export default function TeacherDashboard() {
           }
         >
           <Text style={styles.cardText}>
-            Announcements
+            📢 Announcements
           </Text>
         </TouchableOpacity>
 
@@ -66,7 +91,7 @@ export default function TeacherDashboard() {
           }
         >
           <Text style={styles.cardText}>
-            Students
+            👥 Students
           </Text>
         </TouchableOpacity>
       </View>
@@ -80,7 +105,7 @@ export default function TeacherDashboard() {
           }
         >
           <Text style={styles.cardText}>
-            Leave Requests
+            🕒 Leave Requests
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -92,12 +117,12 @@ export default function TeacherDashboard() {
           }
         >
           <Text style={styles.cardText}>
-            Results
+            📊 Results
           </Text>
         </TouchableOpacity>
       </View>
       
-    </View>
+    </ScrollView>
   );
 }
 
@@ -131,7 +156,40 @@ const styles = StyleSheet.create({
   },
 
   cardText: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
+  fontSize: 16,
+  fontWeight: "bold",
+  textAlign: "center",
+},
+  teacherCard: {
+  backgroundColor: "white",
+  padding: 20,
+  borderRadius: 12,
+  elevation: 3,
+  marginBottom: 20,
+},
+
+teacherName: {
+  fontSize: 22,
+  fontWeight: "bold",
+},
+
+teacherInfo: {
+  marginTop: 5,
+  color: "gray",
+},
+summaryCard: {
+  backgroundColor: "white",
+  width: "48%",
+  padding: 15,
+  borderRadius: 12,
+  alignItems: "center",
+  elevation: 3,
+  marginBottom: 15,
+},
+
+summaryValue: {
+  fontSize: 24,
+  fontWeight: "bold",
+  color: "#2563EB",
+},
 });
