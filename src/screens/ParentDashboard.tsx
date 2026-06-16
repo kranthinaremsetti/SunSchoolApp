@@ -165,8 +165,9 @@ const loadStudent = async () => {
   </Text>
 </TouchableOpacity>
 </View>
+<View style={styles.row}>
   <TouchableOpacity
-  style={styles.singleCard}
+  style={styles.dashboardCard}
   onPress={() =>
     navigation.navigate(
       "LeaveHistory"
@@ -177,6 +178,19 @@ const loadStudent = async () => {
     📋 Leave History
   </Text>
 </TouchableOpacity>
+<TouchableOpacity
+  style={styles.dashboardCard}
+  onPress={() =>
+    navigation.navigate(
+      "Holidays"
+    )
+  }
+>
+  <Text style={styles.dashboardText}>
+    📅 Holidays
+  </Text>
+</TouchableOpacity>
+</View>
     </ScrollView>
   );
 }
@@ -269,4 +283,5 @@ summaryValue: {
   fontWeight: "bold",
   color: "#2563EB",
 },
+
 });

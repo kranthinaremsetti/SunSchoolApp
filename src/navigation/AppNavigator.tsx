@@ -27,6 +27,8 @@ import TeacherResultsScreen from "../screens/TeacherResultsScreen";
 import AddStudentScreen from "../screens/AddStudentScreen";
 import AdminTeachersScreen from "../screens/AdminTeachersScreen";
 import AddFeeScreen from "../screens/AddFeeScreen";
+import HolidayScreen
+from "../screens/HolidayScreen";
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
@@ -160,6 +162,10 @@ export default function AppNavigator() {
 <Stack.Screen
   name="AddFee"
   component={AddFeeScreen}
+/>
+<Stack.Screen
+  name="Holidays"
+  component={HolidayScreen}
 />
       </Stack.Navigator>
     </NavigationContainer>

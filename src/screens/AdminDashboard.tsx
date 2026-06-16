@@ -130,6 +130,11 @@ const loadCounts = async () => {
         </TouchableOpacity>
   <TouchableOpacity
   style={styles.card}
+  onPress={() =>
+    navigation.navigate(
+      "Holidays"
+    )
+  }
 >
   <Text style={styles.cardText}>
     📅 Holidays
