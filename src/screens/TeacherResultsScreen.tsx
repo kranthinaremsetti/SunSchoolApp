@@ -6,12 +6,23 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-import { useState } from "react";
 import { saveResult } from "../services/resultService";
 import { Picker } from "@react-native-picker/picker";
-import { students } from "../data/students";
-
+import { useState, useEffect } from "react";
+import { getStudents } from "../services/studentService";
 export default function TeacherResultsScreen() {
+  const [students, setStudents] =
+  useState<any[]>([]);
+  useEffect(() => {
+  loadStudents();
+}, []);
+
+const loadStudents = async () => {
+  const data =
+    await getStudents();
+
+  setStudents(data);
+};
   const [studentId, setStudentId] =
   useState("1");
 

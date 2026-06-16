@@ -29,4 +29,34 @@ export const parents = [
   password: "1234",
   studentId: 5,
 },
+{
+  id: 106,
+  username: "parent6",
+  password: "1234",
+  studentId: 6,
+},
+{
+  id: 107,
+  username: "parent7",
+  password: "1234",
+  studentId: 7,
+},
+{
+  id: 108,
+  username: "parent8",
+  password: "1234",
+  studentId: 8,
+},
+{
+  id: 109,
+  username: "parent9",
+  password: "1234",
+  studentId: 9,
+},
+{
+  id: 110,
+  username: "parent10",
+  password: "1234",
+  studentId: 10,
+},
 ];

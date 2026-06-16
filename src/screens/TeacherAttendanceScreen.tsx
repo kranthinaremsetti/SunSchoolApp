@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { useState } from "react";
-import { students } from "../data/students";
+import { useState, useEffect } from "react";
+import { getStudents } from "../services/studentService";
 import { Picker } from "@react-native-picker/picker";
 import { classesData } from "../constants/classesData";
 import {
@@ -19,13 +19,23 @@ import {
 } from "../data/notifications";
 
 export default function TeacherAttendanceScreen() {
-  const [studentsState, setStudentsState] = useState(
-    students.map((student) => ({
+  const [studentsState, setStudentsState] =
+  useState<any[]>([]);
+  useEffect(() => {
+  loadStudents();
+}, []);
+
+const loadStudents = async () => {
+  const data =
+    await getStudents();
+
+  setStudentsState(
+    data.map((student) => ({
       ...student,
       present: true,
     }))
   );
-
+};
   const [selectedClass, setSelectedClass] =
     useState("5th Class");
 
