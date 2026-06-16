@@ -24,7 +24,9 @@ import LeaveRequestsScreen from "../screens/LeaveRequestsScreen";
 import AdminReportsScreen from "../screens/AdminReportsScreen";
 import LeaveHistoryScreen from "../screens/LeaveHistoryScreen";
 import TeacherResultsScreen from "../screens/TeacherResultsScreen";
-
+import AddStudentScreen from "../screens/AddStudentScreen";
+import AdminTeachersScreen from "../screens/AdminTeachersScreen";
+import AddFeeScreen from "../screens/AddFeeScreen";
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
@@ -147,6 +149,18 @@ export default function AppNavigator() {
       name="TeacherResults"
       component={TeacherResultsScreen}
     />
+    <Stack.Screen
+  name="AddStudent"
+  component={AddStudentScreen}
+/>
+<Stack.Screen
+  name="AdminTeachers"
+  component={AdminTeachersScreen}
+/>
+<Stack.Screen
+  name="AddFee"
+  component={AddFeeScreen}
+/>
       </Stack.Navigator>
     </NavigationContainer>
   );

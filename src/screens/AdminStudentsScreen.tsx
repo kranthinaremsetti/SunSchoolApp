@@ -3,19 +3,75 @@ import {
   View,
   Text,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 
-import { students } from "../data/students";
-import { getStudents } from "../services/studentService";
+import {
+  useEffect,
+  useState,
+} from "react";
 
+import { getStudents } from "../services/studentService";
+import { useNavigation } from "@react-navigation/native";
 export default function AdminStudentsScreen() {
+  const [students, setStudents] =
+    useState<any[]>([]);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  useEffect(() => {
+    loadStudents();
+  }, []);
+  const navigation = useNavigation<any>();
+
+  const loadStudents = async () => {
+    try {
+      const data =
+        await getStudents();
+
+      setStudents(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>
-        Student Management
-      </Text>
+      <View style={styles.header}>
+  <Text style={styles.title}>
+    Student Management
+  </Text>
 
-      {getStudents().map((student) => (
+  <TouchableOpacity
+    style={styles.addButton}
+    onPress={() =>
+      navigation.navigate("AddStudent")
+    }
+  >
+    <Text style={styles.addButtonText}>
+      ➕ Add
+    </Text>
+  </TouchableOpacity>
+</View>
+
+      {students.map((student) => (
         <View
           key={student.id}
           style={styles.card}
@@ -67,4 +123,22 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 8,
   },
+  header: {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: 20,
+},
+
+addButton: {
+  backgroundColor: "#2563EB",
+  paddingHorizontal: 12,
+  paddingVertical: 8,
+  borderRadius: 8,
+},
+
+addButtonText: {
+  color: "white",
+  fontWeight: "bold",
+},
 });

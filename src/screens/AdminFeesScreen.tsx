@@ -3,7 +3,11 @@ import {
   View,
   Text,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
+
+import { useNavigation }
+from "@react-navigation/native";
 
 import {
   useEffect,
@@ -15,6 +19,8 @@ import { getFees } from "../services/feeService";
 import { getStudents } from "../services/studentService";
 
 export default function AdminFeesScreen() {
+  const navigation =
+  useNavigation<any>();
   const [fees, setFees] =
     useState<any[]>([]);
 
@@ -34,15 +40,28 @@ export default function AdminFeesScreen() {
 
     setFees(feeData);
     setStudents(studentData);
-    console.log("Students:", students);
-    console.log("Fees:", fees);
+    console.log("Students:", studentData);
+    console.log("Fees:", feeData);
       };
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>
-        Fee Management
-      </Text>
+      <View style={styles.header}>
+  <Text style={styles.title}>
+    Fee Management
+  </Text>
+
+  <TouchableOpacity
+    style={styles.addButton}
+    onPress={() =>
+      navigation.navigate("AddFee")
+    }
+  >
+    <Text style={styles.addButtonText}>
+      ➕ Add
+    </Text>
+  </TouchableOpacity>
+</View>
 
       {fees.map((fee) => {
         const student =
@@ -107,4 +126,22 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
   },
+  header: {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: 20,
+},
+
+addButton: {
+  backgroundColor: "#2563EB",
+  paddingHorizontal: 12,
+  paddingVertical: 8,
+  borderRadius: 8,
+},
+
+addButtonText: {
+  color: "white",
+  fontWeight: "bold",
+},
 });

@@ -1,27 +1,62 @@
 import {
+  ScrollView,
   View,
   Text,
   StyleSheet,
-  ScrollView,
 } from "react-native";
 
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
+
 import { getStudents } from "../services/studentService";
 
 export default function TeacherStudentsScreen() {
   const [students, setStudents] =
     useState<any[]>([]);
 
+  const [loading, setLoading] =
+    useState(true);
+
   useEffect(() => {
     loadStudents();
   }, []);
 
-  const loadStudents = async () => {
+const loadStudents = async () => {
+  try {
     const data =
       await getStudents();
 
+    console.log(
+      "Teacher Students:",
+      data
+    );
+
     setStudents(data);
-  };
+  } catch (error) {
+    console.log(
+      "Student Load Error:",
+      error
+    );
+  } finally {
+    setLoading(false);
+  }
+};
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView style={styles.container}>

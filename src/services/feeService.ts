@@ -1,10 +1,28 @@
 import {
   collection,
   getDocs,
+  addDoc,
 } from "firebase/firestore";
 
 import { db } from "../firebase/config";
-
+export const saveFee = async (
+  studentId: number,
+  totalFee: number,
+  paidAmount: number,
+  dueDate: string
+) => {
+  await addDoc(
+    collection(db, "fees"),
+    {
+      studentId,
+      totalFee,
+      paidAmount,
+      dueAmount:
+        totalFee - paidAmount,
+      dueDate,
+    }
+  );
+};
 export const getFees = async () => {
   const feesRef =
     collection(db, "fees");

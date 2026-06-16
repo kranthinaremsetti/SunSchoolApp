@@ -1,10 +1,44 @@
 import {
   collection,
   getDocs,
+  addDoc,
 } from "firebase/firestore";
 
 import { db } from "../firebase/config";
+export const saveStudent = async (
+  name: string,
+  className: string,
+  rollNo: number,
+  parentId: number
+) => {
+  console.log("Saving student...");
 
+  const students =
+    await getStudents();
+
+  const nextId =
+    students.length + 1;
+
+  console.log(
+    "Next Student ID:",
+    nextId
+  );
+
+  await addDoc(
+    collection(db, "students"),
+    {
+      id: nextId,
+      name,
+      className,
+      rollNo,
+      parentId,
+    }
+  );
+
+  console.log(
+    "Student Saved Successfully"
+  );
+};
 export const getStudents = async () => {
   const studentsRef =
     collection(db, "students");

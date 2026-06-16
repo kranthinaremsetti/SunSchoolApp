@@ -4,6 +4,13 @@ import {
   Text,
   StyleSheet,
 } from "react-native";
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import { getStudents } from "../services/studentService";
+import { getLeaveRequests } from "../services/leaveService";
 
 import { students } from "../data/students";
 import { teachers } from "../data/teachers";
@@ -17,6 +24,30 @@ export default function AdminReportsScreen() {
     (total, fee) => total + fee.dueAmount,
     0
   );
+  const [studentCount, setStudentCount] =
+  useState(0);
+
+const [leaveCount, setLeaveCount] =
+  useState(0);
+  useEffect(() => {
+  loadData();
+}, []);
+
+const loadData = async () => {
+  const students =
+    await getStudents();
+
+  const leaves =
+    await getLeaveRequests();
+
+  setStudentCount(
+    students.length
+  );
+
+  setLeaveCount(
+    leaves.length
+  );
+};
 
   return (
     <ScrollView style={styles.container}>
@@ -26,37 +57,38 @@ export default function AdminReportsScreen() {
 
       <View style={styles.card}>
         <Text>
-          Students: {students.length}
+          👨‍🎓 Students: {studentCount}
         </Text>
       </View>
 
       <View style={styles.card}>
         <Text>
-          Teachers: {teachers.length}
+         👨‍🏫 Teachers: {teachers.length}
         </Text>
       </View>
 
       <View style={styles.card}>
         <Text>
-          Homework Posted: {homeworkData.length}
+          📚 Homework Posted: {homeworkData.length}
         </Text>
       </View>
 
       <View style={styles.card}>
         <Text>
-          Announcements: {announcements.length}
+          📢 Announcements  : {announcements.length}
         </Text>
       </View>
 
       <View style={styles.card}>
         <Text>
-          Leave Requests: {leaveRequests.length}
+          📝 Leave Requests:
+{leaveCount}
         </Text>
       </View>
 
       <View style={styles.card}>
         <Text>
-          Pending Fees: ₹{pendingFees}
+          💰 Pending Fees: ₹{pendingFees}
         </Text>
       </View>
     </ScrollView>
