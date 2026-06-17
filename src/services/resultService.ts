@@ -4,7 +4,7 @@ import {
   addDoc,
 } from "firebase/firestore";
 
-import { db } from "../firebase/config";
+import { db } from "../firebase/firebaseConfig";
 
 export const getResults = async () => {
   const resultsRef =
