@@ -1,6 +1,3 @@
-# Firebase
-src/firebase/config.ts
-
 # Environment files
 .env
 .env.local
